@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Awesome Library -->
+    <link rel="stylesheet" href="../css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <!-- Main Style Of The Page -->
+    <link rel="stylesheet" href="../css/style.css">
+    <title>To-do-list</title>
+</head>
+<body>
+    <!-- Start div center -->
+    <div class="div-center">
+        <!-- Start table -->
+        <div class="table">
+            <!-- Start Header -->
+            <div class="header">
+                <h1 class="title">مهامي</h1>
+                <button id="add-task" class="add circular"><i class="fa-solid fa-plus"></i></button>
+            </div>
+            <!-- End Header -->
+            <!-- Start  Content-->
+            <div id="tasks" class="content">
+                <div class="task">
+                    <div class="info">
+                        <div>
+                            <h2>قراءة كتاب</h2>
+                        </div>
+                        <div>
+                            <span>
+                                <i class="fa-solid fa-calendar-days"></i>
+                                10/10/2030
+                            </span>
+                        </div>
+                    </div>
+                    <div class="action">
+                        <button class="circular delete"><i class="fa-sharp fa-solid fa-trash"></i></button>
+                        <button class="circular correct"><i class="fa-solid fa-check"></i></button>
+                        <button class="circular edite"><i class="fa-sharp fa-solid fa-pencil"></i></button>
+                    </div>
+                </div>
+            </div>
+            <!-- End  Content-->
+        </div>
+        <!-- End table -->
+    </div>
+        <!-- End div center -->
+    </body>
+    <script>
+        let tasks=[
+            
+        ]
+        //============call tasks from local storage
+        function getTaskFromStorage(){
+            let retrivedTasks=JSON.parse(localStorage.getItem("tasks"))
+            tasks=retrivedTasks?? []
+        }
+        getTaskFromStorage()
+        //=============show task in the page
+        function fillTaskOnThePage(){
+        document.getElementById("tasks").innerHTML=""
+        let index=0
+        for(task of tasks){
+            let content=` 
+                <div class="task ${task.isDone? 'done':''}">
+                    <div class="info">
+                        <div>
+                            <h2>${task.title}</h2>
+                        </div>
+                        <div>
+                            <span>
+                                <i class="fa-solid fa-calendar-days"></i>
+                                ${task.date}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="action">
+                        <button class="circular delete" onclick="deleteTask(${index})"><i class="fa-sharp fa-solid fa-trash"></i></button>
+                       ${task.isDone? ` <button class="circular not-correct" onclick="toggleTaskComplition(${index})"><i class="fa-solid fa-xmark"></i></button>`:` <button class="circular correct" onclick="toggleTaskComplition(${index})"><i class="fa-solid fa-check"></i></button>`}
+                        <button class="circular edite" onclick="editeTask(${index})" ><i class="fa-sharp fa-solid fa-pencil"></i></button>
+                    </div>
+                </div>`
+            document.getElementById("tasks").innerHTML+=content
+            index++
+        }}
+        
+        fillTaskOnThePage()
+        //============= function add task
+        document.getElementById("add-task").addEventListener("click",function(){
+            let taskName=prompt("الرجاء ادخال عنوان المهمة")
+            if(!(taskName == null)){
+            let now=new Date()
+            let date=now.getDate() + "/" + (now.getMonth()+1) + "/" + now.getFullYear() + " | "+ now.getHours()+":"+now.getMinutes()
+            taskObj={
+                "title":taskName,
+                "date":date,
+                "isDone":false
+            }
+            tasks.push(taskObj)
+            storeTask()
+            fillTaskOnThePage()
+        }
+        })
+        //==========function delete task
+        function deleteTask(index){
+            let task=tasks[index]
+            let isConfirmed=confirm(`هل أنت متأكد من حذف:${task.title}`)
+            if(isConfirmed==true){
+                tasks.splice(index,1)
+                storeTask()
+                fillTaskOnThePage()
+            }
+        }
+        //===========function Edite task
+        function editeTask(index){
+            let task=tasks[index]
+            let newTaskName=prompt("الرجاء إدخال عنوان المهمة الجديد",task.title)
+            if(!(newTaskName==null)){
+                task.title=newTaskName
+                storeTask()
+                fillTaskOnThePage()
+            }
+        }
+        //============function toggle task complition
+        function toggleTaskComplition(index){
+            let task=tasks[index]
+            task.isDone=! task.isDone
+            storeTask()
+            fillTaskOnThePage()
+        }
+        //====Function Local Storage
+        function storeTask(){
+            let taskString=JSON.stringify(tasks)
+            localStorage.setItem("tasks",taskString)
+        }
+    </script>
+    </html>

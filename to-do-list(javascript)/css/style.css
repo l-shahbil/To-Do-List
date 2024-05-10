@@ -1,0 +1,109 @@
+/* Start Variblie */
+/* End Variblie */
+/* Start Global Rule */
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+html{
+    direction: rtl;
+}
+body{
+    background-color: rgb(30, 0, 77);
+    font-family: 'Tajawal', sans-serif;
+}
+/* End Global Rule */
+/* Start Component */
+.circular{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    line-height: 2.2;
+}
+button{
+    border: none;
+    font-size: 20px;
+    box-shadow: 0px 3px 5px rgba(168, 168, 168, 0.38);
+    
+}
+/* End Component */
+/* Start div center */
+.div-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* End div center */
+/* Start table */
+.table{
+    width: 60%;
+    margin-top: 130px;
+    background-color: rgb(239, 239, 239);
+}
+/* End table */
+/* Start Header */
+.header{
+    width:100%;
+    text-align: center;
+    background-color: rgb(92, 52,155);
+    color: white;
+    padding: 8px 0;
+}
+.title{
+    display:inline;
+}
+.add{
+    float: right;
+    background-color: white;
+    margin-right: 10px;
+}
+
+/* End Header */
+/* Start content */
+.content{
+    padding: 20px;
+}
+.task{
+    display: flex;
+    padding: 4px;
+    background-color: white;
+    border-bottom:solid black 1px ;
+    transition: box-shadow 0.2s;
+}
+.done{
+    display: flex;
+    padding: 4px;
+    background-color: rgb(158,253,160);
+    border-bottom:solid black 1px ;
+    transition: box-shadow 0.2s;
+}
+.task:hover {
+    box-shadow: 0px 3px 15px rgb(97, 97, 97,0.843);
+}
+.info{
+    width: 70%;
+}
+.action{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 20%;
+}
+.action .delete{
+    background-color: rgb(144, 0, 0);
+    color: white;
+}
+.action .correct{
+    background-color: rgb(0, 150, 30);
+    color: white;
+}
+.action .not-correct{
+    background-color: rgb(118, 0, 101);
+    color: white;
+}
+.action .edite{
+    background-color: rgb(0, 16, 197);
+    color: white;
+}
+/* End content */
